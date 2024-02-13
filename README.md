@@ -14,6 +14,11 @@ Therefore, a foreigner would have to search online or ask someone for the descri
 This is where the motivation for this project comes for - to help the tourists and not only them to navigate better
 when going to the restaurant.
 
+## High-Level Diagram
+
+<img width="1206" alt="High-level diagram" src="https://github.com/yonitoo/Enhanced-BG-gastronomy-translator/assets/36246462/1bd26ad2-33fb-4f05-970d-15fa54740815">
+
+
 ## Dependencies
 
 BulStem: https://pypi.org/project/bulstem/
