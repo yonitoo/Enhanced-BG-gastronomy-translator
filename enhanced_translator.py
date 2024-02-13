@@ -5,7 +5,7 @@ import re
 import deepl
 from bulstem.stem import BulStemmer
 
-stemmer = BulStemmer.from_file('./bulstem_stemming_rules/stem_rules_context_2_utf8.txt',
+stemmer = BulStemmer.from_file('bulstem_stemming_rules/stem_rules_context_2_utf8.txt',
                                min_freq=2, left_context=2)
 auth_key = os.getenv("DEEPL_AUTH_KEY")
 if not auth_key:
