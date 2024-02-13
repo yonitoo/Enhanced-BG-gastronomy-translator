@@ -18,9 +18,11 @@ when going to the restaurant.
 
 BulStem: https://pypi.org/project/bulstem/
 
+```
 Nakov, P. BulStem: Design and evaluation of inflectional stemmer for Bulgarian. In Workshop on
 Balkan Language Resources and Tools (Balkan Conference in Informatics).
-
+```
+Install it using pip:
 ```python
 pip install bulstem
 ```
