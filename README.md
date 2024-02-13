@@ -14,24 +14,6 @@ Therefore, a foreigner would have to search online or ask someone for the descri
 This is where the motivation for this project comes for - to help the tourists and not only them to navigate better
 when going to the restaurant.
 
-## How to test it
-
-You should create a DeepL account and use your Authentication Key for DeepL API.
-
-```bash 
-export DEEPL_AUTH_KEY=<YOUR_DEEPL_AUTH_KEY>
-```
-
-Run the flask_ui.py script in order to start the UI:
-```bash
-python3 flask_ui.py
-```
-
-## Example
-
-<img width="1539" alt="Example" src="https://github.com/yonitoo/Enhanced-BG-gastronomy-translator/assets/36246462/2a6cda30-b7c2-42ff-8525-2677b8145f95">
-
-
 ## Dependencies
 
 BulStem: https://pypi.org/project/bulstem/
@@ -39,8 +21,29 @@ BulStem: https://pypi.org/project/bulstem/
 Nakov, P. BulStem: Design and evaluation of inflectional stemmer for Bulgarian. In Workshop on
 Balkan Language Resources and Tools (Balkan Conference in Informatics).
 
+```python
+pip install bulstem
+```
+
 The DeepL Translation API: https://www.deepl.com/docs-api/translate-text
 
+## How to run it
+
+* You should create a DeepL account and use your Authentication Key for DeepL API.
+```bash 
+export DEEPL_AUTH_KEY=<YOUR_DEEPL_AUTH_KEY>
+```
+
+* Run the flask_ui.py script in order to start the UI:
+```bash
+python3 flask_ui.py
+```
+
+* Open http://127.0.0.1:5000 to access it.
+
+## Example
+
+<img width="1539" alt="Example" src="https://github.com/yonitoo/Enhanced-BG-gastronomy-translator/assets/36246462/2a6cda30-b7c2-42ff-8525-2677b8145f95">
 
 ## Inspiration
 
