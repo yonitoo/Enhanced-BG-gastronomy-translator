@@ -1,20 +1,7 @@
-import os
-
-import deepl
-from bulstem.stem import BulStemmer
 from flask import Flask, request, render_template_string
 
 from enhanced_translator import translate, postprocess_translation
 
-# stemmer = BulStemmer.from_file('./bulstem_stemming_rules/stem_rules_context_2_utf8.txt',
-#                                min_freq=2, left_context=2)
-# auth_key = os.getenv("DEEPL_AUTH_KEY")
-# if not auth_key:
-#     raise ValueError("DEEPL_AUTH_KEY не е зададен като променлива на средата.")
-# translator = deepl.Translator(auth_key)
-# target_lang = "EN-GB"
-# tag_handling = "html"
-# do_not_translate_terms_json_filename = "Glossary_cleaned.json"
 app = Flask(__name__)
 
 TEMPLATE = '''
