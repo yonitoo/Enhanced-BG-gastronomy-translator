@@ -16,10 +16,12 @@ when going to the restaurant.
 
 ## High-Level Diagram
 
-<img width="1206" alt="High-level diagram" src="https://github.com/yonitoo/Enhanced-BG-gastronomy-translator/assets/36246462/1bd26ad2-33fb-4f05-970d-15fa54740815">
+<img width="1206" alt="High-Level Diagram" src="https://github.com/yonitoo/Enhanced-BG-gastronomy-translator/assets/36246462/8257bb18-796d-435c-911e-2fa649c3ab4b">
 
 
 ## Dependencies
+
+MediaWiki Action API: https://www.mediawiki.org/wiki/API:Main_page
 
 BulStem: https://pypi.org/project/bulstem/
 
