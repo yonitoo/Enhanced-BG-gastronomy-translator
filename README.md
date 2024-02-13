@@ -27,6 +27,11 @@ Run the flask_ui.py script in order to start the UI:
 python3 flask_ui.py
 ```
 
+## Example
+
+<img width="1539" alt="Example" src="https://github.com/yonitoo/Enhanced-BG-gastronomy-translator/assets/36246462/2a6cda30-b7c2-42ff-8525-2677b8145f95">
+
+
 ## Dependencies
 
 BulStem: https://pypi.org/project/bulstem/
