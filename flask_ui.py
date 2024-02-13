@@ -4,7 +4,7 @@ import deepl
 from bulstem.stem import BulStemmer
 from flask import Flask, request, render_template_string
 
-from enhanced_translator_stem import translate, postprocess_translation
+from enhanced_translator import translate, postprocess_translation
 
 # stemmer = BulStemmer.from_file('./bulstem_stemming_rules/stem_rules_context_2_utf8.txt',
 #                                min_freq=2, left_context=2)
