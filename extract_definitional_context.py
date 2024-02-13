@@ -5,6 +5,7 @@ from transliterate import translit
 content_file = 'fetched_wiki_bg.json'
 
 
+# TODO utilize BERT to extract definitional context as proposed in the paper
 def extract_definitional_context(content):
     # добавяме отстояния, за да разделяме правилно изреченията след това
     content_with_spaces = re.sub(r'(?<=[.!?])(?=[А-Я])', '. ', content)
