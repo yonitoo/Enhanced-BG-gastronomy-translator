@@ -44,9 +44,6 @@ def home():
     if request.method == 'POST':
         query = request.form['query']
         _, translation, footnotes = translate(query)
-        translation = postprocess_translation(translation)
-        for footnote in footnotes:
-            postprocess_translation(footnote[1])
     return render_template_string(TEMPLATE, query=query, translation=translation, footnotes=footnotes)
 
 

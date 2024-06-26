@@ -59,6 +59,11 @@ def fetch_article_content(title, lang='bg'):
     return page.get("extract", "")
 
 
+# def fetch_article_content_in_english(title):
+#     content = fetch_article_content(title, lang='en')
+#     return extract_definitional_context_with_embeddings(content)
+
+
 def save_articles_to_json(titles, filename, lang='bg'):
     articles = []
     for title in titles:

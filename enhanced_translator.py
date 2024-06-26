@@ -4,16 +4,29 @@ import re
 
 import deepl
 from bulstem.stem import BulStemmer
+from constants import STEMMER_FILE, DO_NOT_TRANSLATE_TERMS_JSON_FILENAME, TARGET_LANG, TAG_HANDLING, TEXT_CORRECTOR_MODEL
+import phunspell
 
-stemmer = BulStemmer.from_file('bulstem_stemming_rules/stem_rules_context_2_utf8.txt',
+stemmer = BulStemmer.from_file(STEMMER_FILE,
                                min_freq=2, left_context=2)
 auth_key = os.getenv("DEEPL_AUTH_KEY")
 if not auth_key:
     raise ValueError("DEEPL_AUTH_KEY не е зададен като променлива на средата.")
 translator = deepl.Translator(auth_key)
-target_lang = "EN-GB"
-tag_handling = "html"
-do_not_translate_terms_json_filename = "Glossary_cleaned.json"
+pspell = phunspell.Phunspell('bg_BG')
+text_corrector = pipeline("text2text-generation", model=TEXT_CORRECTOR_MODEL)
+
+
+def correct_spelling(text):
+    words = text.split()
+    corrected_words = []
+    for word in words:
+        if not pspell.lookup(word):
+            suggestions = list(pspell.suggest(word))
+            corrected_words.append(suggestions[0] if suggestions else word)
+        else:
+            corrected_words.append(word)
+    return " ".join(corrected_words)
 
 
 def load_terms_data(filename):
@@ -168,15 +181,16 @@ def translate(query):
     :return: Превод на заявката с обяснени термини в нея.
     """
     query = preprocess_text(query)
+    query = correct_spelling(query)
     print(query)
     # зареждаме речника
-    terms = load_terms_data(do_not_translate_terms_json_filename)
+    terms = load_terms_data(DO_NOT_TRANSLATE_TERMS_JSON_FILENAME)
     # Маркиране на термините от речника с no translate tag
     text_with_no_translate_tags, footnotes, transliterations_temp = mark_terms_with_no_translate_and_footnotes(query,
                                                                                                                terms)
     # Превод на основния текст
     translated_text = translator.translate_text(text_with_no_translate_tags,
-                                                target_lang=target_lang, tag_handling=tag_handling).text
+                                                target_lang=TARGET_LANG, tag_handling=TAG_HANDLING).text
     # Премахване на no translate tags и заместване с транслитерация
     translated_text = replace_span_with_transliteration(translated_text, transliterations_temp)
     translated_text = postprocess_translation(translated_text)

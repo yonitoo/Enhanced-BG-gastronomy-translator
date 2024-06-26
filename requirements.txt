@@ -1,0 +1,7 @@
+deepl
+bulstem
+flask
+transliterate
+phunspell
+transformers
+openai
