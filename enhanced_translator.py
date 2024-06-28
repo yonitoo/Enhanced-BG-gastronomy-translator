@@ -4,7 +4,7 @@ import re
 
 import deepl
 from bulstem.stem import BulStemmer
-from constants import STEMMER_FILE, DO_NOT_TRANSLATE_TERMS_JSON_FILENAME, TARGET_LANG, TAG_HANDLING, TEXT_CORRECTOR_MODEL
+from constants import STEMMER_FILE, DO_NOT_TRANSLATE_TERMS_JSON_FILENAME, TARGET_LANG, TAG_HANDLING
 import phunspell
 
 stemmer = BulStemmer.from_file(STEMMER_FILE,
@@ -14,11 +14,16 @@ if not auth_key:
     raise ValueError("DEEPL_AUTH_KEY не е зададен като променлива на средата.")
 translator = deepl.Translator(auth_key)
 pspell = phunspell.Phunspell('bg_BG')
-text_corrector = pipeline("text2text-generation", model=TEXT_CORRECTOR_MODEL)
 
 
 def correct_spelling(text):
-    words = text.split()
+    """
+    Поправя правопис в текст.
+
+    :param text: текст/заявка
+    :return: поправения текст
+    """
+    words = re.findall(r'\b\w+\b', text)
     corrected_words = []
     for word in words:
         if not pspell.lookup(word):
@@ -26,10 +31,22 @@ def correct_spelling(text):
             corrected_words.append(suggestions[0] if suggestions else word)
         else:
             corrected_words.append(word)
-    return " ".join(corrected_words)
+    
+    # Построяваме отново заявката, запазвайки пунктуацията
+    corrected_text = text
+    for original, corrected in zip(re.findall(r'\b\w+\b', text), corrected_words):
+        corrected_text = re.sub(r'\b{}\b'.format(re.escape(original)), corrected, corrected_text, 1)
+    
+    return corrected_text
 
 
 def load_terms_data(filename):
+    """
+    Зарежда термините от речника от файл.
+
+    :param text: текст/заявка
+    :return: заредените термини от речника
+    """
     with open(filename, "r", encoding="utf-8") as file:
         return json.load(file)["terms"]
 
@@ -162,7 +179,7 @@ def preprocess_text(text):
     return text
 
 
-def postprocess_translation(translation):
+def remove_intervals_before_punctuation_marks(translation):
     """
     Премахва интервали преди пунктуационни знаци.
 
@@ -182,6 +199,7 @@ def translate(query):
     """
     query = preprocess_text(query)
     query = correct_spelling(query)
+    query = remove_intervals_before_punctuation_marks(query)
     print(query)
     # зареждаме речника
     terms = load_terms_data(DO_NOT_TRANSLATE_TERMS_JSON_FILENAME)
@@ -193,13 +211,13 @@ def translate(query):
                                                 target_lang=TARGET_LANG, tag_handling=TAG_HANDLING).text
     # Премахване на no translate tags и заместване с транслитерация
     translated_text = replace_span_with_transliteration(translated_text, transliterations_temp)
-    translated_text = postprocess_translation(translated_text)
+    translated_text = remove_intervals_before_punctuation_marks(translated_text)
     # Превод и транслитерация на дефинитивните контексти
     translated_footnotes = translate_and_transliterate_definitions(footnotes, transliterations_temp, translator)
     # Добавяне на преведените бележки под линия към превода
     final_translation = add_footnotes_to_translation(translated_text, translated_footnotes)
     # Форматираме пунктуацията
-    final_translation = postprocess_translation(final_translation)
+    final_translation = remove_intervals_before_punctuation_marks(final_translation)
     return final_translation, translated_text, translated_footnotes
 
 

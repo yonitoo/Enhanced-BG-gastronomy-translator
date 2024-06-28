@@ -20,8 +20,8 @@ def apply_modifications(title, definitional_context):
         "Пача (супа)": ("Супа пача", translit("Супа пача", 'bg', reversed=True)),
         "Принцеса (храна)": ("Принцеса", translit("Принцеса", 'bg', reversed=True)),
         "Снежанка (салата)": ("Снежанка", translit("Снежанка", 'bg', reversed=True)),
-        "Торта \"Гараш\"": ("Торта Гараш", translit("Торта Гараш", 'bg', reversed=True)),
-        "Руло \"Стефани\"": ("Руло Стефани", translit("Руло Стефани", 'bg', reversed=True)),
+        "Торта „Гараш“": ("Торта Гараш", translit("Торта Гараш", 'bg', reversed=True)),
+        "Руло „Стефани“": ("Руло Стефани", translit("Руло Стефани", 'bg', reversed=True)),
     }
     if title in modifications:
         title, transliteration = modifications[title]
