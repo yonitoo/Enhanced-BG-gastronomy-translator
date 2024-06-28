@@ -62,6 +62,8 @@ def fetch_article_content(title, lang='bg'):
 def save_articles_to_json(titles, filename, lang='bg'):
     articles = []
     for title in titles:
+        if title in not_french_cuisine:
+            continue
         content = fetch_article_content(title, lang)
         if len(content) > 0:
             content = clean_text(content)
@@ -80,14 +82,9 @@ def clean_text(text):
 
 
 def main():
-    category_bg = "Категория:Българска кухня"
-    titles_bg = fetch_titles_from_category(category_bg, 'bg')
-    save_articles_to_json(titles_bg, 'fetched_wiki_bg.json', 'bg')
-
-    category_en = "Category:Bulgarian cuisine"
-    titles_en = fetch_titles_from_category(category_en, 'en')
-    save_articles_to_json(titles_en, 'fetched_wiki_en.json', 'en')
-
+    category_fr = "Catégorie:Cuisine française"
+    titles_fr = fetch_titles_from_category(category_fr, 'fr')
+    save_articles_to_json(titles_fr, 'fetched_wiki_fr.json', 'fr')
 
 if __name__ == '__main__':
     main()
